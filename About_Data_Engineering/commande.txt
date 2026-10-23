@@ -1,0 +1,17 @@
+    - Apache NiFi
+/opt/nifi/bin/nifi.sh start
+/opt/nifi/bin/nifi.sh stop
+/opt/nifi/bin/nifi.sh restart
+/opt/nifi/bin/nifi.sh set-single-user-credantials user_name password(at least 12 caracter)
+
+
+
+    - Apache AirFlow
+conda prefix /opt/airflow python=3.12 -y
+conda activate /opt/airflow
+airflow db migrate
+airflow resetdb
+airflow api-server
+airflow scheduler
+cat /opt/airflow/simple_auth_manager_passwords.json.generated (the location of credentials to log in)
+airflow users reset-password --username user_name --password Password (reset password)
