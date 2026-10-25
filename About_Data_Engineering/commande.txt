@@ -9,11 +9,13 @@
     - Apache AirFlow
 conda prefix /opt/airflow python=3.12 -y
 conda activate /opt/airflow
+pip install 'apache-airflow[postgres,slack,celery]'
 airflow db migrate
 airflow resetdb
 airflow api-server
 airflow scheduler
-cat /opt/airflow/simple_auth_manager_passwords.json.generated (the location of credentials to log in)
+cat /opt/airflow/simple_auth_manager_passwords.json.generated (the location of credentials 
+    to log in)
 airflow users reset-password --username user_name --password Password (reset password)
 
 
@@ -22,3 +24,10 @@ airflow users reset-password --username user_name --password Password (reset pas
 sudo systemctl deamon-reload
 sudo systemctl enable elasticsearch.service
 sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
+
+
+
+    - Kibana
+- /usr/share/kibana/bin/kibana (http://localhost:5601)
+- sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+- sudo /usr/share/kibana/bin/kibana-verification-code
