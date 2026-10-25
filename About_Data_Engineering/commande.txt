@@ -1,29 +1,31 @@
 ﻿    - Apache NiFi
-/opt/nifi/bin/nifi.sh start
-/opt/nifi/bin/nifi.sh stop
-/opt/nifi/bin/nifi.sh restart
-/opt/nifi/bin/nifi.sh set-single-user-credantials user_name password(at least 12 caracter)
+- /opt/nifi/bin/nifi.sh start
+- /opt/nifi/bin/nifi.sh stop
+- /opt/nifi/bin/nifi.sh restart
+- /opt/nifi/bin/nifi.sh set-single-user-credantials user_name password(at least 12 caracter)
+- http://localhost:9300/nifi/
 
 
 
     - Apache AirFlow
-conda prefix /opt/airflow python=3.12 -y
-conda activate /opt/airflow
-pip install 'apache-airflow[postgres,slack,celery]'
-airflow db migrate
-airflow resetdb
-airflow api-server
-airflow scheduler
-cat /opt/airflow/simple_auth_manager_passwords.json.generated (the location of credentials 
+- conda prefix /opt/airflow python=3.12 -y
+- conda activate /opt/airflow
+- pip install 'apache-airflow[postgres,slack,celery]'
+- airflow db migrate
+- airflow resetdb
+- airflow api-server
+- airflow scheduler
+- cat /opt/airflow/simple_auth_manager_passwords.json.generated (the location of credentials 
     to log in)
-airflow users reset-password --username user_name --password Password (reset password)
+- airflow users reset-password --username user_name --password Password (reset password)
 
 
 
     - Elasticsearch
-sudo systemctl deamon-reload
-sudo systemctl enable elasticsearch.service
-sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
+- sudo systemctl deamon-reload
+- sudo systemctl enable elasticsearch.service
+- sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
+- http://localhost:9200
 
 
 
@@ -40,3 +42,8 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
 - CREATE DATABASE my_database;
 - \l
 
+
+
+    - pgAdmin4
+- sudo /usr/pgadmin4/bin/setup-web.sh (Configure the webserver, if you installed pgadmin4-web)
+- http://localhost/pgadmin4
