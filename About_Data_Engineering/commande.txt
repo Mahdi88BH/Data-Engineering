@@ -31,3 +31,12 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
 - /usr/share/kibana/bin/kibana (http://localhost:5601)
 - sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
 - sudo /usr/share/kibana/bin/kibana-verification-code
+
+
+
+    - PostgreSQL
+- sudo -u postgres psql
+- ALTER USER postgres WITH PASSWORD 'your_secure_password';
+- CREATE DATABASE my_database;
+- \l
+
