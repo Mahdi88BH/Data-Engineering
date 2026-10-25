@@ -1,4 +1,4 @@
-    - Apache NiFi
+﻿    - Apache NiFi
 /opt/nifi/bin/nifi.sh start
 /opt/nifi/bin/nifi.sh stop
 /opt/nifi/bin/nifi.sh restart
@@ -15,3 +15,10 @@ airflow api-server
 airflow scheduler
 cat /opt/airflow/simple_auth_manager_passwords.json.generated (the location of credentials to log in)
 airflow users reset-password --username user_name --password Password (reset password)
+
+
+
+    - Elasticsearch
+sudo systemctl deamon-reload
+sudo systemctl enable elasticsearch.service
+sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
