@@ -1,0 +1,48 @@
+    - Pipeline Overview
+
+This architecture represents an advanced JSON Data Ingestion, Parsing, and Transformation 
+Pipeline. It is designed to pull raw JSON files, break them down, filter and evaluate 
+specific fields, reshape the structure using Jolt and SQL, and write the final output 
+to a target destination.
+
+
+- Step-by-Step Flow Breakdown
+
+1. Ingestion (`GetFile`)
+    - Located at the top-left.
+    -  Its job is to poll a source directory on the file system and bring raw JSON files into 
+    the NiFi flow as `FlowFiles`.
+
+2. JSON Splitting (`SplitJson`)
+    - Located at the top-center.
+    - If the incoming file contains a large array of JSON objects, this processor splits 
+    the array into individual, separate `FlowFile` documents for record-level processing.
+
+3. Property Extraction (`EvaluateJsonPath` - Top Right)
+    - Parses the individual JSON documents and uses JSONPath expressions to extract specific 
+    fields out of the JSON body and store them as metadata attributes on the `FlowFile`.
+
+4. SQL Record Filtering (`QueryRecord`)
+    - Located on the middle-right.
+    - Executes SQL queries against the incoming records to filter them based on business logic 
+    (such as routing rows where a value is `over.40`).
+
+5. Attribute Packaging (`AttributesToJSON`)
+    - Located in the center.
+    - Converts the metadata attributes back into a structured JSON document content, allowing 
+    attributes to be treated as standard data fields.
+
+6. JSON Restructuring (`JoltTransformJSON`)
+    - Located at the bottom-center.
+    - Uses Jolt specifications to completely reshape, rename, or map the JSON structure into 
+    a new target schema required by downstream systems.
+
+7. Final Delivery (`PutFile`)
+    - Located at the bottom-right.
+    -  Takes the fully cleaned, queried, and transformed JSON files and writes them out to 
+    a final destination folder on disk.
+
+8. Parallel Processing Branch (Left Side)**
+    - The secondary branch on the left features another `EvaluateJsonPath` and an 
+    `UpdateAttribute` processor. This branch inspects secondary fields and dynamically 
+    updates tracking metadata or tags on the FlowFiles before they continue down the pipeline.
