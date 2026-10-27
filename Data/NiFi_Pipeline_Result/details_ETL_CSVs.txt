@@ -1,0 +1,36 @@
+    - Pipeline Overview
+This pipeline follows a classic ETL (Extract, Transform, Load) pattern inside NiFi: it ingests 
+raw files from a source folder, breaks them down into records, filters them using SQL, 
+extracts specific text patterns, updates their metadata, and writes the final output 
+to a target destination folder.   
+
+Step-by-Step Flow Breakdown
+    1. Ingestion (GetFile)
+        - The pipeline begins at the top-left with the GetFile processor.   
+        - Its job is to poll a designated directory on the filesystem and pull raw files into 
+        the NiFi flow as FlowFiles.   
+
+    2. Record Splitting (SplitRecord)
+        - Successful files are routed down to the SplitRecord processor.   
+        - This processor parses structured file formats (like CSV, JSON, or XML) and splits 
+        large files into smaller individual record batches for granular processing.   
+
+    3. SQL Filtering (QueryRecord)
+        - The split records are passed into a QueryRecord processor.   
+        - This powerful processor allows you to write standard SQL queries against streaming 
+        data records to filter, aggregate, or route them based on conditions 
+        (such as the custom over.40 routing path visible in the queue).   
+
+    4. Text Parsing (ExtractText)
+        - Data passing the query criteria moves to the ExtractText processor.   
+        - This uses regular expressions or matching rules to extract specific text snippets out 
+        of the FlowFile content and turn them into dynamic attributes.   
+
+    5. Metadata Updates (UpdateAttribute)
+        - Next, the FlowFiles pass through the UpdateAttribute processor.   
+        - This step adds, modifies, or deletes metadata attributes (like filenames, status tags, 
+        or custom tracking variables) attached to the FlowFiles.   
+
+    6. Final Delivery (PutFile)
+        At the end of the pipeline, the PutFile processor takes the fully processed FlowFiles and 
+        writes them out to a target directory on the disk.
