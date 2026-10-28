@@ -19,7 +19,7 @@
 - airflow db reset 
 - airflow dags list
 - airflow dags reserialize
-- cat /opt/airflow/simple_auth_manager_passwords.json.generated (the location of credentials 
+- cat ~/airflow/simple_auth_manager_passwords.json.generated (the location of credentials 
     to log in)
 - airflow users reset-password --username user_name --password Password (reset password)
 - airflow users create \
