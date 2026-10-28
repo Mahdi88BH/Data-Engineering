@@ -37,6 +37,7 @@
 - sudo systemctl enable elasticsearch.service
 - sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
 - http://localhost:9200
+- http://localhost:9200/_cat/indices
 
 
 

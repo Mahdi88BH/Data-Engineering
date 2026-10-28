@@ -1,0 +1,28 @@
+Here is the breakdown of the Apache NiFi ETL (Extract, Transform, Load) pipeline architecture :
+
+---
+
+1. `ExecuteSQLRecord` (Data Extraction & Formatting)
+    - Role: Connects to your PostgreSQL database using the JDBC pool 
+    (`jdbc:postgresql://localhost:5432/dataengineering`), executes your SQL query, and formats 
+    the output into JSON using your configured `JsonRecordSetWriter`.
+    - Current Status: It has successfully extracted 10,000 records (452.95 MB) from PostgreSQL 
+    and passed them into the `success` relationship queue.
+
+2. `SplitText` (Data Streaming / Batching)
+    - Role: Takes the incoming large JSON payload from the queue and splits it line-by-line 
+    (with Line Split Count = 1) into smaller individual FlowFiles so they can be processed 
+    and indexed smoothly without overloading memory.
+    - Current Status: It has already processed 33.93 MB of the queued data.
+
+3. `PutElasticsearchRecord` (Data Ingestion / Loading)
+    - Role: Acts as the sink/destination of your pipeline. It uses its Record Reader 
+    (`JsonTreeReader`) to parse each split JSON record and sends bulk indexing requests 
+    to your Elasticsearch cluster (`https://localhost:9200`) into the target index.
+    - Current Status: It is currently stopped and waiting for incoming split records from `SplitText`.
+
+=> To Run the Full Pipeline:
+    1. Ensure all `failure`, `retry`, and `original` relationships across all three processors 
+    are either connected or auto-terminated in their Settings tab.
+    2. Select all processors and click the Start (green play button) icon on top to let 
+    the data flow continuously from PostgreSQL to Elasticsearch.
