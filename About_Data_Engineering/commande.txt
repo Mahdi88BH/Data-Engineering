@@ -41,7 +41,7 @@
 
 
     - Kibana
-- /usr/share/kibana/bin/kibana (http://localhost:5601)
+- /usr/share/kibana/bin/kibana => systemctl start kibana.service  (http://localhost:5601)
 - sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
 - sudo /usr/share/kibana/bin/kibana-verification-code
 
