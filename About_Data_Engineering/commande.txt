@@ -3,7 +3,7 @@
 - /opt/nifi/bin/nifi.sh stop
 - /opt/nifi/bin/nifi.sh restart
 - /opt/nifi/bin/nifi.sh set-single-user-credantials user_name password(at least 12 caracter)
-- http://localhost:9300/nifi/
+- http://localhost:9300(8080)/nifi/ 
 
 
 
@@ -42,7 +42,8 @@
 
 
     - Kibana
-- /usr/share/kibana/bin/kibana => systemctl start kibana.service  (http://localhost:5601)
+- /usr/share/kibana/bin/kibana
+- systemctl start kibana.service  (http://localhost:5601)
 - sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
 - sudo /usr/share/kibana/bin/kibana-verification-code
 
